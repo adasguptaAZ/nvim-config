@@ -1,0 +1,4 @@
+{
+  coc.preferences.formatOnSaveFiletypes: ["py", "yaml", "json"]
+  python.formatting.provider: "black"
+}
