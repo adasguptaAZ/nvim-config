@@ -1,15 +1,15 @@
+
 call plug#begin('~/.vim/plugged')
 " Sensible defaults
-Plug 'tpope/vim-sensible'
+" Plug 'tpope/vim-sensible'
 " Plug 'folke/which-key.nvim'
 " Plug 'goolord/alpha-nvim'
 
 " File explorer
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'jremmen/vim-ripgrep'
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
 
 " File content explorer
 " Plug 'dyng/ctrlsf.vim'
@@ -22,7 +22,7 @@ Plug 'ryanoasis/vim-devicons'
 
 " Git 
 Plug 'kdheepak/lazygit.nvim'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 "Plug 'tpope/vim-fugitive'
 " Plug 'TimUntersberger/neogit'
 
@@ -33,16 +33,15 @@ Plug 'airblade/vim-gitgutter'
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
 "Plug 'arcticicestudio/nord-vim'
-" Plug 'Mofiqul/dracula.nvim'
-Plug 'kyoz/purify', { 'rtp': 'vim' }
-Plug 'tanvirtin/monokai.nvim'
+Plug 'Mofiqul/dracula.nvim'
+" Plug 'tanvirtin/monokai.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 
 " Working with tmux
 Plug 'christoomey/vim-tmux-navigator'
 
 " Copilot
-" Plug 'github/copilot.vim'           " GitHub copilot
+Plug 'github/copilot.vim'           " GitHub copilot
 
 " Programming-related
 "Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate'}
@@ -52,18 +51,17 @@ Plug 'tpope/vim-commentary'         " Commenting
 " Plug 'jpalardy/vim-slime'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sirver/UltiSnips'             " Snippets
-Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'ncm2/ncm2-ultisnips'          " R snippets
-" Plug 'mfussenegger/nvim-lint'       "Linter
+Plug 'mfussenegger/nvim-lint'       "Linter
 Plug 'm4xshen/autoclose.nvim'       "Matching brackets
 
 " R-related plugins
-Plug 'jalvesaq/Nvim-R'
-Plug 'gaalcaras/ncm-R'
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
+Plug 'jalvesaq/Nvim-R'
 " Plug 'jalvesaq/Nvim-R' , { 'for': ['r','rmd','rnoweb','quarto'] }
-" Plug 'jalvesaq/cmp-nvim-r'
+Plug 'jalvesaq/cmp-nvim-r'
+Plug 'gaalcaras/ncm-R'
 " Plug 'jalvesaq/zotcite'
 " Plug 'jalvesaq/cmp-zotcite'
 " Plug 'chrisbra/csv.vim'
@@ -71,30 +69,9 @@ Plug 'roxma/nvim-yarp'
 " Plug 'jmbuhr/otter.nvim'
 
 " Python-related plugins
-" Python folding script
-Plug 'kalekundert/vim-coiled-snake'
-Plug 'Konfekt/FastFold'
-
-" Load indentation checker
-Plug 'nvie/vim-flake8'
-
-" Load maralla autocompletor
-Plug 'maralla/completor.vim'
-
-" Load indentLine - displays indentation guide and line
-Plug 'Yggdroot/indentLine'
-
-" Load jupytext
-Plug 'GCBallesteros/jupytext.vim'
-
-" Load IronVim
-Plug 'hkupty/iron.nvim'
-
-Plug 'kana/vim-textobj-user'
-Plug 'GCBallesteros/vim-textobj-hydrogen'
-" Plug 'neovim/pynvim' 
-" Plug 'mtikekar/nvim-send-to-term'
-" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'neovim/pynvim' 
+Plug 'mtikekar/nvim-send-to-term'
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 
 " Markdown-related
 " Plug 'godlygeek/tabular'
@@ -106,27 +83,28 @@ Plug 'GCBallesteros/vim-textobj-hydrogen'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'ojroques/nvim-lspfuzzy'
-" Plug 'nvim-lua/completion-nvim'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-calc'
-Plug 'hrsh7th/cmp-emoji'
-Plug 'hrsh7th/cmp-omni'
-" Plug 'f3fora/cmp-spell'
-" Plug 'kdheepak/cmp-latex-symbols'
-" Plug 'jc-doyle/cmp-pandoc-references'
+Plug 'nvim-lua/completion-nvim'
+" Plug 'hrsh7th/nvim-cmp'
+" Plug 'hrsh7th/cmp-nvim-lsp'
+" Plug 'hrsh7th/cmp-buffer'
+" Plug 'hrsh7th/cmp-path'
+" Plug 'hrsh7th/cmp-calc'
+" Plug 'hrsh7th/cmp-emoji'
+" Plug 'hrsh7th/cmp-omni'
+Plug 'f3fora/cmp-spell'
+Plug 'kdheepak/cmp-latex-symbols'
+Plug 'jc-doyle/cmp-pandoc-references'
 
-" Plug 'hrsh7th/cmp-nvim-lua'
-" Plug 'hrsh7th/cmp-cmdline'
-" Plug 'VonHeikemen/lsp-zero.nvim'
+Plug 'hrsh7th/cmp-nvim-lua'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'VonHeikemen/lsp-zero.nvim'
 
 " Telescope
 Plug 'nvim-lua/plenary.nvim' 
 Plug 'folke/todo-comments.nvim'     " Highlight and search TODO comments
 " Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-telescope/telescope.nvim', {'tag': '0.1.1'}
+Plug 'nvim-telescope/telescope.nvim'
 " Plug 'ThePrimeagen/harpoon'
 
 
@@ -138,4 +116,9 @@ Plug 'nvim-telescope/telescope.nvim', {'tag': '0.1.1'}
 " Initialize plugin system
 call plug#end()
 
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" IMPORTANT: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
 

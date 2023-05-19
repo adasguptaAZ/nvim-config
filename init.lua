@@ -1,6 +1,7 @@
 -- neovim config
 
 require('config.keymaps')
+-- require('config.plugins')
 -- require('config.global')
 
 ------- HELPERS  -------
@@ -9,8 +10,8 @@ local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
 local Plug = fn['plug#']
 
 local function map(mode, lhs, rhs, opts)
-  local options = {noremap = true}
-  if opts then options = vim.tbl_extend('force', options, opts) end
+local options = {noremap = true}
+if opts then options = vim.tbl_extend('force', options, opts) end
   api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
@@ -21,12 +22,17 @@ end
 
 -------------------- PLUGINS -------------------------------
 
-cmd 'source ~/.config/nvim/plugins.vim'
+cmd [[source ~/.config/nvim/plugins.vim]]
 
 ------ OPTIONS ---------
-
+cmd [[syntax on]]
 local indent, width = 2, 80
--- cmd 'colorscheme dracula'
+-- cmd [[colorscheme purify]]
+require('monokai').setup {}
+require('monokai').setup { palette = require('monokai').pro }
+require('monokai').setup { palette = require('monokai').soda }
+require('monokai').setup { palette = require('monokai').ristretto }
+
 -- vim.g.airline_theme = 'badwolf'
 
 opt('b', 'expandtab', true)  -- Use spaces instead of tabs
@@ -35,7 +41,7 @@ opt('b', 'shiftwidth', indent)            -- Size of an indent
 opt('b', 'smartindent', true)             -- Insert indents automatically
 opt('b', 'tabstop', indent)               -- Number of spaces tabs count for
 opt('b', 'textwidth', width)              -- Maximum width of text
-opt('o', 'completeopt', 'menuone,noinsert,noselect')  -- Completion options
+-- opt('o', 'completeopt', 'menuone,noinsert,noselect')  -- Completion options
 opt('o', 'hidden', true)                  -- Enable background buffers
 opt('o', 'ignorecase', true)              -- Ignore case
 opt('o', 'joinspaces', false)             -- No double spaces with join
@@ -74,10 +80,12 @@ for ls, cfg in pairs({
   bashls = {},
   ccls = {},
   jsonls = {},
-  julials = {on_attach=require'completion'.on_attach},
-  r_language_server = {on_attach=require'completion'.on_attach},
-  pylsp = {root_dir = lsp.util.root_pattern('.git', fn.getcwd()), on_attach=require'completion'.on_attach},
-}) do lsp[ls].setup(cfg) end
+  -- julials = {on_attach=require'completion'.on_attach},
+  -- r_language_server = {on_attach=require'completion'.on_attach},
+  -- pylsp = {root_dir = lsp.util.root_pattern('.git', fn.getcwd()), on_attach=require'completion'.on_attach},
+}) 
+  do lsp[ls].setup(cfg) 
+end
 lspfuzzy.setup {}
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
@@ -94,13 +102,125 @@ local ts = require 'nvim-treesitter.configs'
 
 -------------------- LINTING -------------------------------
 
-require('lint').linters_by_ft = {
-  python = {'pylint',}
-}
+-- require('lint').linters_by_ft = {
+--   python = {'pylint',}
+-- }
 
 -------------------- TODO -------------------------
-require("todo-comments").setup {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-  }
+-- require("todo-comments").setup {
+--     -- your configuration comes here
+--     -- or leave it empty to use the default settings
+--     -- refer to the configuration section below
+--   }
+
+-- Setting up cmp
+-- From http://neovimcraft.com/plugin/hrsh7th/nvim-cmp/index.html
+local cmp = require'cmp'
+
+cmp.setup ({
+  snippet = {
+    -- REQUIRED - you must specify a snippet engine
+    expand = function(args)
+    fn["UltiSnips#Anon"](args.body) -- for ultisnips
+    end,
+  },
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    -- documetation = cmp.config.window.bordered(),
+  }, 
+mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      -- { name = 'vsnip' }, -- For vsnip users.
+      -- { name = 'luasnip' }, -- For luasnip users.
+      { name = 'ultisnips' }, -- For ultisnips users.
+      -- { name = 'snippy' }, -- For snippy users.
+    }, {
+      { name = 'buffer' },
+    })
+  })
+-- require'cmp'.setup {
+--   sources = {
+--     { name = 'omni' }
+--   }
+-- }
+
+-- Telescope
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+-- IronVim
+local iron = require("iron.core")
+local view = require("iron.view")
+
+iron.setup({
+  config = {
+    should_map_plug = false,
+    scratch_repl = true,
+    repl_definition = {
+      python = {
+        command = { "ipython" },
+        format = require("iron.fts.common").bracketed_paste,
+      },
+    },
+    repl_open_cmd = view.split.vertical("40%")
+  },
+  keymaps = {
+    send_motion = "<space>rc",
+    visual_send = "<space>rc",
+    send_file = "<space>rf",
+    exit = "<space>rq",
+    clear = "<space>rx",
+  },
+})
+
+-- iron.setup({
+--   config = {
+--     scratch_repl = true, 
+--     repl_definition = {
+--       sh = {
+--         command = { 'zsh' }
+--       },
+--       python = {
+--         command = { "ipython" },
+--       },
+--     },
+--     -- repl_open_cmd = require("iron.view").right(100),
+--     repl_open_cmd = view.split.vertical("40%")
+--   },
+--   keymaps = {
+--     send_motion = "<space>rc",
+--     visual_send = "<space>rc",
+--     send_file = "<space>rf",
+--     send_mark = "<space>rm",
+--     mark_motion = "<space>rmc",
+--     mark_visual = "<space>rmc",
+--     remove_mark = "<space>rmd",
+--     cr = "<space>r<cr>",
+--     interrupt = "<space>r<space>",
+--     exit = "<space>rq",
+--     clear = "<space>rx"},
+--   highlight = {
+--     italic = true,},
+--   ignore_blank_lines = true,
+-- })
+-- iron also has a list of commands, see :h iron-commands for all available commands
+vim.keymap.set('n', '<space>rs', '<cmd>IronRepl<cr>')
+vim.keymap.set('n', '<space>rr', '<cmd>IronRestart<cr>')
+vim.keymap.set('n', '<space>rf', '<cmd>IronFocus<cr>')
+vim.keymap.set('n', '<space>rh', '<cmd>IronHide<cr>')
+
+-- jupytext
+g.jupytext_fmt = 'py'
+g.jupytext_style = 'hydrogen'
+
+cmd [[nmap \x <space>rcih/^# %%<CR><CR>]]

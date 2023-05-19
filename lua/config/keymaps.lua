@@ -51,6 +51,7 @@ nmap("<S-Right>", "<cmd>vertical resize +2<CR>")
 
 -- maps for R
 imap('>>',' |> ')
+imap("<C-Space>","<C-x><C-o>")
 
 -- maps for NERDTree
 nmap('<F2>',':NERDTreeToggle<CR>')
@@ -116,3 +117,6 @@ local function toggle_light_dark_theme()
     vim.cmd [[Catppuccin latte]]
   end
 end
+
+-- Keymaps for iron.vim
+nmap('<leader>x','ctrih/^# %%<CR><CR>')
