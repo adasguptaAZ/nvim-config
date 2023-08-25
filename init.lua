@@ -26,6 +26,7 @@ cmd [[source ~/.config/nvim/plugins.vim]]
 
 ------ OPTIONS ---------
 cmd [[syntax on]]
+cmd [[set autoread]]
 local indent, width = 2, 80
 -- cmd [[colorscheme purify]]
 require('monokai').setup {}
@@ -98,7 +99,30 @@ map('n', '<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
 
 -------------------- TREE-SITTER ---------------------------
 local ts = require 'nvim-treesitter.configs'
--- ts.setup {ensure_installed = 'maintained', highlight = {enable = true}}
+ts.setup {ensure_installed = {'r','python','markdown','markdown_inline','julia','bash','yaml',
+'lua','vim','query','vimdoc','latex','html','css',}, 
+  highlight = {enable = true, additional_vim_regex_highlightin=false,},
+  indent={enable=true},
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+    textobjects = {
+    select = {
+      enable = true,
+      lookahead=true,
+      keymaps = {
+        ['af'] = '@functoin.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
+        ['ic'] = '@class.inner',
+        },
+        }}}}
+
 
 -------------------- LINTING -------------------------------
 
@@ -122,6 +146,7 @@ cmp.setup ({
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
     fn["UltiSnips#Anon"](args.body) -- for ultisnips
+    -- require('luasnip').lsp_expand(args.body) -- for luasnip users
     end,
   },
   window = {
@@ -159,29 +184,29 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 -- IronVim
-local iron = require("iron.core")
-local view = require("iron.view")
+-- local iron = require("iron.core")
+-- local view = require("iron.view")
 
-iron.setup({
-  config = {
-    should_map_plug = false,
-    scratch_repl = true,
-    repl_definition = {
-      python = {
-        command = { "ipython" },
-        format = require("iron.fts.common").bracketed_paste,
-      },
-    },
-    repl_open_cmd = view.split.vertical("40%")
-  },
-  keymaps = {
-    send_motion = "<space>rc",
-    visual_send = "<space>rc",
-    send_file = "<space>rf",
-    exit = "<space>rq",
-    clear = "<space>rx",
-  },
-})
+-- iron.setup({
+--   config = {
+--     should_map_plug = false,
+--     scratch_repl = true,
+--     repl_definition = {
+--       python = {
+--         command = { "ipython" },
+--         format = require("iron.fts.common").bracketed_paste,
+--       },
+--     },
+--     repl_open_cmd = view.split.vertical("40%")
+--   },
+--   keymaps = {
+--     send_motion = "<space>rc",
+--     visual_send = "<space>rc",
+--     send_file = "<space>rf",
+--     exit = "<space>rq",
+--     clear = "<space>rx",
+--   },
+-- })
 
 -- iron.setup({
 --   config = {
@@ -214,13 +239,58 @@ iron.setup({
 --   ignore_blank_lines = true,
 -- })
 -- iron also has a list of commands, see :h iron-commands for all available commands
-vim.keymap.set('n', '<space>rs', '<cmd>IronRepl<cr>')
-vim.keymap.set('n', '<space>rr', '<cmd>IronRestart<cr>')
-vim.keymap.set('n', '<space>rf', '<cmd>IronFocus<cr>')
-vim.keymap.set('n', '<space>rh', '<cmd>IronHide<cr>')
+-- vim.keymap.set('n', '<space>rs', '<cmd>IronRepl<cr>')
+-- vim.keymap.set('n', '<space>rr', '<cmd>IronRestart<cr>')
+-- vim.keymap.set('n', '<space>rf', '<cmd>IronFocus<cr>')
+-- vim.keymap.set('n', '<space>rh', '<cmd>IronHide<cr>')
+
+
+-- vim-slime
+-- See https://github.com/uncomfyhalomacro/erudite-vim/blob/main/lua/core/plugins/vim-slime.lua 
+g.slime_target="tmux"
+-- g.slime_paste_file="$HOME/.slime_paste"
+-- vim.cmd([[let g:slime_default_config = {"socket_name": get(split($TMUX, ","), 0), "target_pane": ":.1"}]])
+vim.cmd([[let g:slime_default_config = {"socket_name": "default", "target_pane": "{last}"}]])
+
+g.slime_cell_delimiter="```"
+vim.keymap.set('n', '<leader>ls', '<Plug>SlimeLineSend')
+vim.keymap.set('n', '<leader>cs', '<Plug>SlimeSendCell')
+vim.keymap.set('n', '<leader>ps', '<Plug>SlimeParagraphSend')
+vim.keymap.set('n', '<leader>gs', '<Plug>SlimeRegionSend')
+
+-- Nvim-R 
+
+g.R_hi_fun = 0
+
 
 -- jupytext
 g.jupytext_fmt = 'py'
 g.jupytext_style = 'hydrogen'
 
 cmd [[nmap \x <space>rcih/^# %%<CR><CR>]]
+
+-- Tabnine
+require('tabnine').setup({
+  disable_auto_comment=true,
+  accept_keymap="<C-a>",
+  dismiss_keymap = "<C-]>",
+  debounce_ms = 800,
+  suggestion_color = {gui = "#808080", cterm = 244},
+  exclude_filetypes = {"TelescopePrompt"},
+  log_file_path = nil, -- absolute path to Tabnine log file
+})
+
+--------------SNIPPETS ---------------------
+-- cmd [[let g:UltiSnipsSnippetDirectories=["UltiSnips","snips"]]]
+cmd [[
+  let g:UltiSnipsExpandTrigger="<Tab>"
+  let g:UltiSnipsJumpForwardTrigger="<Tab>"
+  let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
+  let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips']
+  ]]
+
+-- Load snippets from ~/.config/nvim/LuaSnip/
+-- require("luasnip.loaders.from_vscode").lazy_load({paths = {"./snips/snippets"}})
+-- require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/LuaSnip/"})
+
+
