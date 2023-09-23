@@ -1,7 +1,7 @@
 -- neovim config
 
 require('config.keymaps')
--- require('config.plugins')
+require('config.plugins')
 -- require('config.global')
 
 ------- HELPERS  -------
@@ -116,7 +116,7 @@ ts.setup {ensure_installed = {'r','python','markdown','markdown_inline','julia',
       enable = true,
       lookahead=true,
       keymaps = {
-        ['af'] = '@functoin.outer',
+        ['af'] = '@function.outer',
         ['if'] = '@function.inner',
         ['ac'] = '@class.outer',
         ['ic'] = '@class.inner',
@@ -281,7 +281,8 @@ require('tabnine').setup({
 })
 
 --------------SNIPPETS ---------------------
--- cmd [[let g:UltiSnipsSnippetDirectories=["UltiSnips","snips"]]]
+-- cmd [[
+--   let g:UltiSnipsSnippetDirectories=["UltiSnips","snips"]]
 cmd [[
   let g:UltiSnipsExpandTrigger="<Tab>"
   let g:UltiSnipsJumpForwardTrigger="<Tab>"

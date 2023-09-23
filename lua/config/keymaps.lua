@@ -71,9 +71,9 @@ imap('<C-f><C-p>', '<Plug>CtrlSFPwordPath')
 -- needs kitty (or other terminal) config:
 -- map shift+enter send_text all \x1b[13;2u
 -- map ctrl+enter send_text all \x1b[13;5u
--- nmap('<c-cr>', '<Plug>SlimeSendCell')
+nmap('<c-cr>', '<Plug>SlimeSendCell')
 -- nmap('<s-cr>', '<Plug>SlimeSendCell')
--- imap('<c-cr>', '<esc><Plug>SlimeSendCell<cr>i')
+imap('<c-cr>', '<esc><Plug>SlimeSendCell<cr>i')
 -- imap('<s-cr>', '<esc><Plug>SlimeSendCell<cr>i')
 
 -- send code with Enter and leader Enter

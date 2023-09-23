@@ -64,6 +64,9 @@ Plug 'jpalardy/vim-slime'
 
 " Snippets
 Plug 'sirver/UltiSnips'             " Snippets
+" Plug 'L3MON4D3/LuaSnip'
+" Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'jc-doyle/cmp-pandoc-references'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'ncm2/ncm2-ultisnips'          " R snippets
 Plug 'hrsh7th/vim-vsnip'
@@ -113,8 +116,8 @@ Plug 'GCBallesteros/jupytext.vim'
 " Plug 'kana/vim-textobj-user'
 " Plug 'GCBallesteros/vim-textobj-hydrogen'
 " Plug 'neovim/pynvim' 
-" Plug 'mtikekar/nvim-send-to-term'
-" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'mtikekar/nvim-send-to-term'
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 
 " Markdown-related
 " Plug 'godlygeek/tabular'
@@ -135,9 +138,9 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-calc'
 Plug 'hrsh7th/cmp-emoji'
 Plug 'hrsh7th/cmp-omni'
-" Plug 'f3fora/cmp-spell'
-" Plug 'kdheepak/cmp-latex-symbols'
-" Plug 'jc-doyle/cmp-pandoc-references'
+Plug 'f3fora/cmp-spell'
+Plug 'kdheepak/cmp-latex-symbols'
+Plug 'jc-doyle/cmp-pandoc-references'
 
 " Plug 'hrsh7th/cmp-nvim-lua'
 " Plug 'hrsh7th/cmp-cmdline'
